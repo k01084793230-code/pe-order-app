@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PE Lunch Order v9</title>
+<style>
+:root{--yellow:#FEE500;--bg:#F7F8FA;--text:#191919;--muted:#888;--card:#fff;--line:#ECEEF2;--orange:#FF7A00;--red:#F03E3E;--green:#12B886;--shadow:0 10px 28px rgba(0,0,0,.08)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;color:var(--text)}
+button,input{font-family:inherit}.app{max-width:520px;margin:0 auto;min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--yellow),#FFE978);padding:24px 18px 34px;border-radius:0 0 32px 32px;box-shadow:0 12px 28px rgba(255,213,0,.25)}
+.heroTop{display:flex;justify-content:space-between;align-items:flex-start}.logo{font-size:28px;font-weight:950;letter-spacing:-.8px}.logo small{display:block;font-size:16px;margin-top:8px}.deadline{display:inline-block;margin-top:12px;background:rgba(255,255,255,.55);border-radius:999px;padding:8px 12px;font-size:13px;font-weight:900}.iconBtn{border:0;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.65);font-size:18px}
+main{padding:14px;margin-top:-22px}.card{background:var(--card);border:1px solid rgba(0,0,0,.04);border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.title{display:flex;justify-content:space-between;align-items:center;margin:0 0 14px}.title h2{font-size:18px;margin:0;font-weight:950}.muted{color:var(--muted);font-size:13px;font-weight:750}
+.search{width:100%;border:1px solid var(--line);border-radius:18px;padding:15px 16px;font-size:16px;background:#FAFAFB;outline:none}.staffList{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
+.staffBtn{position:relative;width:100%;min-width:0;min-height:70px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:10px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;font-size:13px;line-height:1.2;font-weight:900;text-align:center;word-break:keep-all;cursor:pointer}.staffBtn.done{background:#FFFBE6;border-color:#FFE066}.staffBtn.active{outline:3px solid var(--yellow);border-color:#F5C400}.staffIcon{font-size:17px;line-height:1}.staffName{display:block;width:100%;overflow-wrap:anywhere}.staffStatus{position:absolute;right:6px;top:5px;width:18px;height:18px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:11px;font-weight:950}
+.badge{font-size:12px;font-weight:900;color:#8A6D00;background:#FFF3BF;padding:5px 9px;border-radius:999px}.popularGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.foodCard{position:relative;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(0,0,0,.07);transition:transform .12s ease, box-shadow .12s ease}.foodCard:active{transform:scale(.985)}.foodCard.selected{outline:4px solid var(--yellow);box-shadow:0 10px 24px rgba(255,213,0,.24)}.foodCheck{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:18px;font-weight:950;box-shadow:0 4px 12px rgba(0,0,0,.18)}.foodImg{width:100%;height:112px;object-fit:cover;display:block}.foodInfo{padding:12px}.foodName{font-size:17px;font-weight:950;letter-spacing:-.4px}.foodPrice{color:var(--orange);font-size:16px;font-weight:950;margin-top:2px}.selectBtn{display:none}.foodCard{cursor:pointer}
+.optionPanel{position:sticky;bottom:12px;z-index:10;background:#fff;border:1px solid var(--line);border-radius:26px;padding:16px;box-shadow:0 -8px 30px rgba(0,0,0,.12);margin-bottom:14px}.optionTitle{font-size:20px;font-weight:950}.optionPrice{color:var(--orange);font-weight:950;margin-top:2px}.cartList{display:grid;gap:8px;margin:14px 0}.cartItem{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);border-radius:16px;padding:10px;background:#FAFAFB}.cartName{font-weight:950}.qtyBox{display:flex;align-items:center;gap:8px}.qtyBtn{border:0;background:#191919;color:#fff;width:30px;height:30px;border-radius:50%;font-size:18px;font-weight:950}.qtyNum{min-width:24px;text-align:center;font-weight:950}.options{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0}.optBtn{border:1px solid var(--line);background:#FAFAFB;border-radius:18px;padding:14px;font-size:16px;font-weight:950}.optBtn.on{background:#FFF9DB;border-color:#FDD835;box-shadow:inset 0 0 0 2px var(--yellow)}
+.orderBtn{width:100%;border:0;background:var(--yellow);border-radius:18px;padding:17px;font-size:18px;font-weight:950;box-shadow:0 10px 20px rgba(255,213,0,.25)}
+.catBlock{border-top:1px solid var(--line);padding:14px 0}.catHead{display:flex;justify-content:space-between;font-size:16px;font-weight:950;cursor:pointer}.menuRows{margin-top:8px;display:grid;gap:4px}.menuRow{border:0;background:#fff;border-bottom:1px solid #F1F2F4;padding:13px 2px;display:flex;justify-content:space-between;font-size:16px;font-weight:850}.menuRow .price{color:var(--orange);font-weight:950}
+.doneBox,.closed{text-align:center;padding:46px 18px}.doneBox{min-height:70vh;display:flex;flex-direction:column;justify-content:center}.check{width:92px;height:92px;border-radius:50%;margin:8px auto 22px;background:var(--yellow);display:grid;place-items:center;font-size:48px;box-shadow:0 14px 30px rgba(255,213,0,.35)}.doneTitle{font-size:32px;font-weight:950;letter-spacing:-.8px;margin-bottom:12px}.receipt{margin:24px 0;padding:24px;background:#fff;border:1px solid var(--line);border-radius:26px;text-align:left;display:grid;gap:14px;font-size:18px;font-weight:900;box-shadow:var(--shadow)}.receipt div{display:flex;justify-content:space-between;gap:18px}.receipt b{text-align:right}.receiptMenu{white-space:pre-line;line-height:1.55}.closed b{font-size:24px;color:var(--red)}
+.adminWrap{max-width:920px;margin:0 auto;padding:16px}.adminGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.statBig{font-size:42px;font-weight:950}.progressRing{width:160px;height:160px;border-radius:50%;margin:8px auto;display:grid;place-items:center;background:conic-gradient(var(--yellow) var(--p), #EEEFF3 0)}.progressInner{width:112px;height:112px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;font-weight:950}.copyBox{white-space:pre-line;background:#191919;color:#fff;border-radius:22px;padding:16px;line-height:1.8;font-size:16px;font-weight:800}.row{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-weight:900}.thumb{width:42px;height:42px;border-radius:12px;object-fit:cover}.rankLeft{display:flex;align-items:center;gap:10px}.adminLogin{max-width:420px;margin:70px auto;padding:16px}.hidden{display:none!important}.adminFloating{position:fixed;right:14px;bottom:14px;z-index:30;border:0;border-radius:50%;background:#191919;color:#fff;width:44px;height:44px;padding:0;font-size:18px;font-weight:950;opacity:.72;display:grid;place-items:center}
+@media(max-width:640px){.adminGrid{grid-template-columns:1fr}.foodImg{height:108px}.staffList{grid-template-columns:repeat(3,minmax(0,1fr))}.staffBtn{min-height:68px;font-size:14px;padding:10px 6px}}
+
+/* ===== PE Lunch v9 visual refresh ===== */
+:root{--yellow:#ffd900;--yellow-strong:#f5c400;--ink:#171717;--sub:#71717a;--surface:#ffffff;--soft:#f4f5f7;--line:#e8e8ec;--danger:#ef4444;--success:#16a34a;--shadow-sm:0 3px 12px rgba(20,20,20,.05);--shadow-md:0 14px 40px rgba(20,20,20,.09)}
+body{background:linear-gradient(180deg,#f8f8fa 0,#f3f4f6 100%);color:var(--ink)}
+.app{max-width:620px}
+.hero{background:linear-gradient(145deg,#191919 0%,#242424 70%,#303030 100%);padding:28px 22px 38px;border-radius:0 0 32px 32px;box-shadow:0 18px 45px rgba(0,0,0,.18);color:#fff;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;right:-90px;top:-105px;background:radial-gradient(circle,rgba(255,217,0,.42),rgba(255,217,0,0) 70%)}
+.heroTop{position:relative;z-index:1;gap:18px}.brandEyebrow{font-size:11px;font-weight:900;letter-spacing:1.8px;color:var(--yellow);margin-bottom:7px}.logo{font-size:29px;line-height:1.05;letter-spacing:-1.1px}.logo small{font-size:14px;line-height:1.45;margin-top:10px;color:#d4d4d8;font-weight:700}.iconBtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);color:#fff;backdrop-filter:blur(8px);box-shadow:none;flex:0 0 auto}.heroMeta{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px}.deadline{margin:0;background:var(--yellow);color:#171717;padding:9px 13px;font-size:12px;box-shadow:0 6px 18px rgba(255,217,0,.2)}.heroHint{font-size:11px;color:#a1a1aa;font-weight:700;text-align:right}
+main{padding:14px 16px 24px;margin-top:-22px;position:relative;z-index:2}.card{border:1px solid rgba(20,20,20,.045);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow-sm)}.title{margin-bottom:15px}.title h2{font-size:17px;letter-spacing:-.45px}.muted{color:var(--sub);font-weight:700}.search{border-radius:14px;padding:14px 15px;background:#f7f7f8;border-color:#ececef;font-size:15px;transition:.2s}.search:focus{background:#fff;border-color:var(--yellow-strong);box-shadow:0 0 0 4px rgba(255,217,0,.14)}
+.staffList{gap:9px;margin-top:13px}.staffBtn{min-height:62px;border-radius:14px;background:#fafafa;border-color:#ededf0;font-size:13px;box-shadow:none;transition:.18s ease}.staffBtn:hover{transform:translateY(-1px);background:#fff;box-shadow:var(--shadow-sm)}.staffBtn.active{outline:none;background:#fff8cc;border:2px solid var(--yellow-strong);box-shadow:0 8px 20px rgba(245,196,0,.16)}.staffBtn.done:not(.active){background:#f6fff8;border-color:#d7f4df}.staffIcon{font-size:15px;opacity:.75}.staffStatus{background:var(--success);color:#fff;right:5px;top:5px;width:17px;height:17px;font-size:10px}
+.popularGrid{gap:13px}.foodCard{border-radius:18px;border-color:#ececef;box-shadow:var(--shadow-sm);transition:.18s ease;background:#fff}.foodCard:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}.foodCard.selected{outline:none;border:2px solid var(--yellow-strong);box-shadow:0 12px 28px rgba(245,196,0,.18)}.foodCheck{width:28px;height:28px;font-size:15px;right:9px;top:9px;box-shadow:0 5px 14px rgba(0,0,0,.18)}.foodImg{height:135px}.foodInfo{padding:13px 14px 14px}.foodName{font-size:16px}.foodPrice{font-size:15px;color:#f26b0a;margin-top:4px}
+.optionPanel{bottom:10px;border-radius:24px;padding:17px;border-color:#e6e6e9;box-shadow:0 18px 45px rgba(0,0,0,.16)}.optionTitle{font-size:18px}.cartItem{border-radius:14px;background:#f8f8f9}.qtyBtn{background:#27272a;width:29px;height:29px}.options{gap:8px}.optBtn{border-radius:14px;padding:13px 8px;font-size:14px;background:#f7f7f8;transition:.16s}.optBtn.on{background:#fff7c2;border-color:var(--yellow-strong);box-shadow:inset 0 0 0 1px var(--yellow-strong)}.orderBtn{background:linear-gradient(180deg,#ffe249,#ffd400);border-radius:15px;padding:16px;font-size:17px;box-shadow:0 10px 22px rgba(245,196,0,.22);transition:.16s}.orderBtn:active{transform:scale(.985)}
+.catBlock{padding:15px 0}.catHead{font-size:15px}.menuRow{padding:14px 3px;font-size:15px}.menuRow .price{color:#f26b0a}.badge{background:#fff4bf;color:#735c00}
+.doneBox{border-radius:26px}.check{background:linear-gradient(180deg,#ffe34f,#ffd400)}.receipt{border-radius:22px;box-shadow:var(--shadow-sm)}.adminFloating{background:#18181b;opacity:.9;box-shadow:0 8px 20px rgba(0,0,0,.22)}
+@media(max-width:640px){.hero{padding:25px 18px 34px}.logo{font-size:25px}.heroHint{display:none}.heroMeta{justify-content:flex-start}.foodImg{height:122px}.staffBtn{min-height:60px}.card{padding:16px}.popularGrid{gap:10px}}
+
+</style>
+</head>
+<body>
+<div class="app" id="userApp">
+<header class="hero">
+  <div class="heroTop">
+    <div>
+      <div class="brandEyebrow">PE ENGINEERING</div>
+      <div class="logo">PE Lunch Order<small>오늘 점심, 빠르고 간편하게 주문하세요</small></div>
+    </div>
+    <button class="iconBtn" onclick="showAdminLogin()" aria-label="관리자">⚙</button>
+  </div>
+  <div class="heroMeta">
+    <span class="deadline">🍱 오늘의 점심 주문</span>
+    <span class="heroHint">이름 → 메뉴 → 맵기 → 주문 완료</span>
+  </div>
+</header>
+<main>
+<section id="closedPage" class="card closed hidden"><b>오늘 주문이 마감되었습니다</b><p class="muted">수정이나 추가 주문은 김예은에게 문의해주세요.</p></section>
+<section id="donePage" class="card doneBox hidden"><div class="check">✓</div><div class="doneTitle">✅ 주문 완료</div><div class="muted">점심 주문이 접수되었습니다.</div><div class="receipt" id="doneReceipt"></div><button class="orderBtn" onclick="newOrder()">확인</button></section>
+<section id="orderContent">
+<div class="card"><div class="title"><h2>1. 이름을 선택해주세요</h2><span class="muted">22명</span></div><input class="search" id="search" placeholder="이름 검색" oninput="renderStaff()"><div id="staffList" class="staffList"></div></div>
+<div class="card" id="menuCard"><div class="title"><h2>🔥 인기메뉴</h2><span id="selectedName" class="muted"></span></div><div class="popularGrid" id="popularGrid"></div></div>
+<div id="optionPanel" class="optionPanel hidden"><div class="optionTitle" id="draftName"></div><div class="optionPrice" id="draftPrice"></div><div class="cartList" id="draftItems"></div><div class="options"><button class="optBtn" id="notSpicyBtn" onclick="setOption('안맵게')">😊 안맵게</button><button class="optBtn" id="normalBtn" onclick="setOption('보통')">🙂 보통</button><button class="optBtn" id="spicyBtn" onclick="setOption('맵게')">🌶️ 맵게</button></div><button class="orderBtn" id="confirmBtn" onclick="confirmOrder()">주문 완료</button></div>
+<div class="card"><div class="title"><h2>📋 전체 메뉴</h2><span class="muted">28개</span></div><div id="allMenu"></div></div>
+</section>
+</main></div>
+<div id="adminLogin" class="adminLogin hidden"><div class="card"><div class="title"><h2>관리자 로그인</h2></div><input class="search" type="password" id="adminPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter') loginAdmin()"><button class="orderBtn" style="margin-top:12px" onclick="loginAdmin()">로그인</button><button class="staffBtn" style="margin-top:10px" onclick="showOrder()">주문 화면으로</button></div></div>
+<div id="adminPage" class="adminWrap hidden"><div class="title"><h2>PE Lunch 관리자</h2><button class="staffBtn" style="width:auto" onclick="showOrder()">주문 화면</button></div><div class="card" style="padding:12px 16px"><div class="row" style="border-bottom:0"><span id="syncStatus" class="muted">구글시트 동기화 대기</span><button class="staffBtn" style="width:auto;padding:10px 14px" onclick="syncFromSheet(true)">새로고침</button></div></div><div class="adminGrid"><div class="card"><div class="title"><h2>오늘 주문 현황</h2></div><div class="progressRing" id="progressRing"><div class="progressInner"><span id="progressText"></span></div></div><div class="row"><span>완료</span><b id="doneCount"></b></div><div class="row"><span>미완료</span><b id="missingCount"></b></div></div><div class="card"><div class="title"><h2>총 주문 금액</h2></div><div class="statBig" id="adminTotal"></div><p class="muted" id="avgText"></p></div></div><div class="adminGrid"><div class="card"><div class="title"><h2>메뉴별 주문 현황</h2></div><div id="rankList"></div></div><div class="card"><div class="title"><h2>미주문자</h2></div><div id="missingList"></div></div></div><div class="card"><div class="title"><h2>전화 주문용</h2></div><div class="copyBox" id="summaryBox"></div><button class="orderBtn" style="margin-top:12px" onclick="copySummary()">집계 복사</button></div><div class="card"><div class="title"><h2>주문자 명단</h2></div><div id="orderList"></div><button class="staffBtn" style="margin-top:12px" onclick="saveDay()">오늘 주문 월말검산 저장</button><button class="staffBtn danger" style="margin-top:10px" onclick="resetToday()">오늘 주문 초기화</button></div></div>
+<button class="adminFloating" onclick="showAdminLogin()">⚙</button>
+<script>
+const WEB_APP_URL="https://script.google.com/macros/s/AKfycbyRbMFyAOSFOtNh44SsSHgteTAKuDmjn8CSa_7QOoMabOLuJ_ZxX8ZjAg3eGmNQJSUR/exec";
+const ADMIN_PASSWORD="2026PE", ORDER_CLOSE_HOUR=11, ORDER_CLOSE_MINUTE=45, TEST_MODE=new URLSearchParams(location.search).get("test")==="1";
+const staff=["권오순","권정한","김남열","김예은","김영석","김종학","김태윤","김현재","마하(동생무리)","박선기","배재환","배흐루지","백영준","신학섭","안희원","장인수","전유식","정유균","최영수","최종섭","한상운","황규대"];
+const menu={"김밥류":[["깻잎김밥",3000],["땡초김밥",4000],["치즈김밥",4000],["참치김밥",4500],["돈까스김밥",4500]],"분식류":[["냄비라면",5000],["치즈라면",6000],["만두라면",6000],["떡라면",6000],["우동",6000],["떡만두국",9000]],"식사류":[["제육덮밥",10000],["뚝배기비빔밥",9000],["비빔밥",9000],["올갱이국",9000],["순두부",8000],["된장",8000],["청국장",8000],["콩비지장",9000],["사골황태국",9000],["김치찌개",9000],["부대찌개",9000],["뚝배기불고기",10000],["갈비탕",10000],["육개장",10000],["돈까스",9000],["치즈돈까스",10000]],"여름메뉴":[["열무국수",9000]]};
+const popular=[["제육덮밥",10000,"assets/jejeyuk.jpg"],["김치찌개",9000,"assets/kimchi.jpg"],["순두부",8000,"assets/soondubu.jpg"],["된장",8000,"assets/doenjang.jpg"],["돈까스",9000,"assets/donkatsu.jpg"],["냄비라면",5000,"assets/ramen.jpg"]];
+const imgByMenu={"제육덮밥":"assets/jejeyuk.jpg","김치찌개":"assets/kimchi.jpg","순두부":"assets/soondubu.jpg","된장":"assets/doenjang.jpg","돈까스":"assets/donkatsu.jpg","냄비라면":"assets/ramen.jpg"};
+let selected="",draft=null;const todayKey=new Date().toISOString().slice(0,10);let orders=JSON.parse(localStorage.getItem("orders_"+todayKey)||"{}"),days=JSON.parse(localStorage.getItem("pe_lunch_days")||"[]"),openCats={"김밥류":true,"분식류":true,"식사류":true,"여름메뉴":true};
+function won(n){return n.toLocaleString("ko-KR")+"원"}function isOrderClosed(){return false}
+function setVisible(m){userApp.classList.toggle("hidden",m!=="order");adminLogin.classList.toggle("hidden",m!=="login");adminPage.classList.toggle("hidden",m!=="admin")}
+function showOrder(){setVisible("order");updateOrderClosedView();renderAll()}function showAdminLogin(){setVisible("login")}function loginAdmin(){if(adminPw.value!==ADMIN_PASSWORD)return alert("비밀번호가 틀렸습니다.");setVisible("admin");syncFromSheet(true);renderAll()}
+function updateOrderClosedView(){const c=isOrderClosed();closedPage.classList.toggle("hidden",!c);orderContent.classList.toggle("hidden",c)}
+function normalizeOption(o){
+  const opt=(o&&o.option)?o.option:"";
+  if(opt==="맵게"||o&&o.spicy) return "맵게";
+  if(opt==="안맵게"||o&&o.notSpicy) return "안맵게";
+  return "보통";
+}
+function orderToDraft(o){
+  if(!o) return {items:[],option:"보통"};
+  if(Array.isArray(o.items)) return {items:o.items.map(it=>({...it})),option:normalizeOption(o)};
+  if(o.menu) return {items:[{menu:o.menu,price:Number(o.price)||0,qty:1}],option:normalizeOption(o)};
+  return {items:[],option:"보통"};
+}
+function itemSummary(items){return items.map(it=>it.menu+(it.qty>1?` x${it.qty}`:"")).join(", ")}
+function itemLines(items){return items.map(it=>it.menu+(it.qty>1?` ×${it.qty}`:"")).join("\n")}
+function draftTotal(){return draft?draft.items.reduce((a,it)=>a+(Number(it.price)||0)*(Number(it.qty)||1),0):0}
+function renderStaff(){const q=search.value.trim();staffList.innerHTML="";staff.filter(n=>n.includes(q)).forEach(name=>{const b=document.createElement("button");b.className="staffBtn "+(orders[name]?"done ":"")+(selected===name?"active":"");b.innerHTML=`${orders[name]?"<span class='staffStatus'>✓</span>":""}<span class="staffIcon">👤</span><span class="staffName">${name}</span>`;b.onclick=()=>{selected=name;draft=orderToDraft(orders[name]);renderAll();menuCard.scrollIntoView({behavior:"smooth"})};staffList.appendChild(b)})}
+function pickMenu(name,price){if(!selected)return alert("먼저 이름을 선택하세요.");if(!draft)draft=orderToDraft(orders[selected]);if(!draft.option)draft.option="보통";const found=draft.items.find(it=>it.menu===name);if(found)found.qty+=1;else draft.items.push({menu:name,price,qty:1});renderAll();optionPanel.scrollIntoView({behavior:"smooth",block:"center"})}
+function changeQty(name,delta){if(!draft)return;const it=draft.items.find(x=>x.menu===name);if(!it)return;it.qty+=delta;if(it.qty<=0)draft.items=draft.items.filter(x=>x.menu!==name);if(draft.items.length===0)draft=null;renderAll()}
+function renderPopular(){popularGrid.innerHTML="";popular.forEach(([n,p,img])=>{const c=document.createElement("div");const has=draft&&draft.items&&draft.items.some(it=>it.menu===n);c.className="foodCard "+(has?"selected":"");c.innerHTML=`${has?"<div class='foodCheck'>✓</div>":""}<img class="foodImg" src="${img}"><div class="foodInfo"><div class="foodName">${n}</div><div class="foodPrice">${won(p)}</div></div>`;c.onclick=()=>pickMenu(n,p);popularGrid.appendChild(c)})}
+function renderAllMenu(){allMenu.innerHTML="";Object.entries(menu).forEach(([cat,items])=>{const wrap=document.createElement("div");wrap.className="catBlock";const rows=items.map(([m,p])=>`<button class="menuRow" onclick="pickMenu('${m}',${p})"><span>${m}</span><span class="price">＋ ${won(p)}</span></button>`).join("");wrap.innerHTML=`<div class="catHead" onclick="toggleCat('${cat}')"><span>${openCats[cat]?'⌄':'›'} ${cat}</span><span class="muted">${items.length}개</span></div><div class="menuRows ${openCats[cat]?'':'hidden'}">${rows}</div>`;allMenu.appendChild(wrap)})}
+function toggleCat(c){openCats[c]=!openCats[c];renderAllMenu()}function renderOption(){selectedName.textContent=selected?selected+" 선택됨":"";const show=selected&&draft&&draft.items&&draft.items.length;optionPanel.classList.toggle("hidden",!show);if(show){if(!draft.option)draft.option="보통";draftName.textContent="선택한 메뉴";draftPrice.textContent=`${selected} · 총 ${won(draftTotal())}`;draftItems.innerHTML=draft.items.map(it=>`<div class="cartItem"><div><div class="cartName">${it.menu}</div><div class="muted">${won(it.price)} × ${it.qty}</div></div><div class="qtyBox"><button class="qtyBtn" onclick="changeQty('${it.menu}',-1)">−</button><span class="qtyNum">${it.qty}</span><button class="qtyBtn" onclick="changeQty('${it.menu}',1)">+</button></div></div>`).join("");spicyBtn.className="optBtn "+(draft.option==="맵게"?"on":"");normalBtn.className="optBtn "+(draft.option==="보통"?"on":"");notSpicyBtn.className="optBtn "+(draft.option==="안맵게"?"on":"");confirmBtn.textContent=`주문 완료 (${won(draftTotal())})`}else{confirmBtn.textContent="주문 완료"}}
+function setOption(option){if(!draft)return;draft.option=option;renderOption()}
+
+function setSyncStatus(msg){
+  const el=document.getElementById("syncStatus");
+  if(el) el.textContent=msg;
+}
+function sheetRowsToOrders(list){
+  const next={};
+  (Array.isArray(list)?list:[]).forEach(r=>{
+    if(!r||!r.name) return;
+    const option=r.option||"";
+    next[r.name]={
+      menu:r.menu||"",
+      price:Number(r.price)||0,
+      option: option || "보통",
+      orderTime:r.orderTime||""
+    };
+  });
+  return next;
+}
+function syncFromSheet(showAlert=false){
+  return new Promise((resolve)=>{
+    const cb="peLunchSync_"+Date.now()+"_"+Math.floor(Math.random()*100000);
+    let done=false;
+    const cleanup=()=>{try{delete window[cb]}catch(e){}; if(script&&script.parentNode)script.parentNode.removeChild(script)};
+    const timer=setTimeout(()=>{
+      if(done) return;
+      done=true; cleanup();
+      setSyncStatus("동기화 실패: Apps Script 응답 없음");
+      if(showAlert) alert("구글시트 데이터를 불러오지 못했습니다. Apps Script 배포 상태를 확인해주세요.");
+      resolve(false);
+    },9000);
+    window[cb]=(data)=>{
+      if(done) return;
+      done=true; clearTimeout(timer); cleanup();
+      orders=sheetRowsToOrders(data);
+      saveOrders();
+      renderAll();
+      const now=new Date().toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit"});
+      setSyncStatus("구글시트 동기화 완료 " + now + " · " + Object.keys(orders).length + "명");
+      resolve(true);
+    };
+    setSyncStatus("구글시트 동기화 중...");
+    const script=document.createElement("script");
+    script.src=WEB_APP_URL+"?action=getOrders&callback="+encodeURIComponent(cb)+"&t="+Date.now();
+    script.onerror=()=>{
+      if(done) return;
+      done=true; clearTimeout(timer); cleanup();
+      setSyncStatus("동기화 실패: 네트워크 오류");
+      if(showAlert) alert("구글시트 데이터를 불러오지 못했습니다. 네트워크를 확인해주세요.");
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
+let adminAutoSync=null;
+function startAdminAutoSync(){
+  if(adminAutoSync) clearInterval(adminAutoSync);
+  adminAutoSync=setInterval(()=>{ if(!adminPage.classList.contains("hidden")) syncFromSheet(false); },5000);
+}
+startAdminAutoSync();
+async function confirmOrder(){if(isOrderClosed()){alert("오늘 주문이 마감되었습니다.");updateOrderClosedView();return}if(!selected||!draft||!draft.items||!draft.items.length)return alert("이름과 메뉴를 선택하세요.");const option=draft.option||"보통";const orderTime=new Date().toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit"});const menuText=itemSummary(draft.items);const totalPrice=draftTotal();const payload={date:todayKey,name:selected,menu:menuText,option,price:totalPrice,orderTime};confirmBtn.textContent="저장 중...";confirmBtn.disabled=true;try{await fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})}catch(e){}orders[selected]={items:draft.items.map(it=>({...it})),menu:menuText,price:totalPrice,option,orderTime};saveOrders();doneReceipt.innerHTML=`<div><span>이름</span><b>${selected}</b></div><div><span>메뉴</span><b class="receiptMenu">${itemLines(draft.items)}</b></div><div><span>옵션</span><b>${option}</b></div><div><span>금액</span><b>${won(totalPrice)}</b></div><div><span>접수</span><b>${orderTime}</b></div>`;selected="";draft=null;confirmBtn.textContent="주문 완료";confirmBtn.disabled=false;orderContent.classList.add("hidden");donePage.classList.remove("hidden");renderAll();scrollTo({top:0,behavior:"smooth"})}
+function newOrder(){donePage.classList.add("hidden");updateOrderClosedView();renderAll()}function totals(){const v=Object.values(orders);return{count:v.length,total:v.reduce((a,o)=>a+(Number(o.price)||0),0)}}function addSummary(map,menuName,price,qty,o){if(!map[menuName])map[menuName]={count:0,total:0,spicy:0,notSpicy:0};map[menuName].count+=qty;map[menuName].total+=(Number(price)||0)*qty;if(o.spicy||o.option==="맵게")map[menuName].spicy+=qty;if(o.notSpicy||o.option==="안맵게")map[menuName].notSpicy+=qty}
+function summaryData(){const map={};Object.values(orders).forEach(o=>{if(Array.isArray(o.items)){o.items.forEach(it=>addSummary(map,it.menu,it.price,Number(it.qty)||1,o))}else{addSummary(map,o.menu,o.price,1,o)}});return map}
+function summaryText(){const map=summaryData();let lines=Object.entries(map).map(([m,v])=>{let s=`${m} ${v.count} = ${won(v.total)}`;if(v.spicy)s+=`\n └ 맵게 ${v.spicy}`;if(v.notSpicy)s+=`\n └ 안맵게 ${v.notSpicy}`;return s}).join("\n\n");return (lines||"주문 없음")+`\n\n총액 ${won(totals().total)}`}
+function renderAdmin(){const t=totals(),pct=Math.round(t.count/staff.length*100);progressRing.style.setProperty("--p",pct+"%");progressText.innerHTML=`<div style="font-size:30px">${t.count}명</div><div>완료</div>`;doneCount.textContent=t.count+"명";missingCount.textContent=(staff.length-t.count)+"명";adminTotal.textContent=won(t.total);avgText.textContent=t.count?`1인 평균 ${won(Math.round(t.total/t.count))}`:"1인 평균 0원";const miss=staff.filter(n=>!orders[n]);missingList.innerHTML=miss.length?miss.map(n=>`<div class="row"><span>👤 ${n}</span></div>`).join(""):"<b style='color:#12B886'>전원 주문 완료</b>";const rank=Object.entries(summaryData()).sort((a,b)=>b[1].count-a[1].count);rankList.innerHTML=rank.length?rank.map(([m,v],i)=>`<div class="row"><div class="rankLeft"><b>${i+1}</b>${imgByMenu[m]?`<img class="thumb" src="${imgByMenu[m]}">`:""}<span>${m}</span></div><b>${v.count}개</b></div>`).join(""):"주문 없음";summaryBox.textContent=summaryText();orderList.innerHTML=Object.entries(orders).map(([n,o])=>`<div class="row"><span>${n}</span><span>${o.menu} ${o.option?`<span class="badge">${o.option}</span>`:""}</span><b>${won(o.price)}</b></div>`).join("")||"주문 없음"}
+function delOrder(n){delete orders[n];saveOrders();renderAll()}function saveOrders(){localStorage.setItem("orders_"+todayKey,JSON.stringify(orders))}async function resetToday(){
+  if(confirm("오늘 주문을 전부 지울까요?\n구글시트 오늘주문도 같이 삭제됩니다.")){
+    try{
+      await fetch(WEB_APP_URL,{
+        method:"POST",
+        mode:"no-cors",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({action:"clearToday"})
+      });
+    }catch(e){}
+    orders={};
+    selected="";
+    draft=null;
+    saveOrders();
+    renderAll();
+    alert("오늘 주문이 초기화되었습니다.");
+  }
+}async function saveDay(){
+  const t=totals();
+  if(t.count===0){alert("저장할 주문이 없습니다.");return;}
+  try{
+    await fetch(WEB_APP_URL,{
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        action:"saveDailyTotal",
+        date:todayKey,
+        count:t.count,
+        total:t.total
+      })
+    });
+  }catch(e){}
+  days=days.filter(d=>d.date!==todayKey);
+  days.push({date:todayKey,count:t.count,total:t.total});
+  localStorage.setItem("pe_lunch_days",JSON.stringify(days));
+  alert("월별검산에 저장되었습니다.\n주문건수: "+t.count+"건\n총금액: "+won(t.total));
+}function copySummary(){navigator.clipboard.writeText(summaryText());alert("복사 완료")}function renderAll(){renderStaff();renderPopular();renderAllMenu();renderOption();renderAdmin()}
+updateOrderClosedView();renderAll();syncFromSheet(false);
+</script>
+</body></html>
