@@ -30,7 +30,7 @@
 <section id="closedPage" class="card closed hidden"><b>오늘 주문이 마감되었습니다</b><p class="muted">수정이나 추가 주문은 김예은에게 문의해주세요.</p></section>
 <section id="donePage" class="card doneBox hidden"><div class="check">✓</div><div class="doneTitle">✅ 주문 완료</div><div class="muted">점심 주문이 접수되었습니다.</div><div class="receipt" id="doneReceipt"></div><button class="orderBtn" onclick="newOrder()">확인</button></section>
 <section id="orderContent">
-<div class="card"><div class="title"><h2>1. 이름을 선택해주세요</h2><span class="muted">23명</span></div><input class="search" id="search" placeholder="이름을 검색하세요" oninput="renderStaff()"><div id="staffList" class="staffList"></div></div>
+<div class="card"><div class="title"><h2>1. 이름을 선택해주세요</h2><span class="muted">24명</span></div><input class="search" id="search" placeholder="이름을 검색하세요" oninput="renderStaff()"><div id="staffList" class="staffList"></div></div>
 <div class="card" id="menuCard"><div class="title"><h2>2. 인기 메뉴</h2><span id="selectedName" class="muted"></span></div><div class="popularGrid" id="popularGrid"></div></div>
 <div id="optionPanel" class="optionPanel hidden"><div class="optionTitle" id="draftName"></div><div class="optionPrice" id="draftPrice"></div><div class="cartList" id="draftItems"></div><div style="font-size:16px;font-weight:900;margin-top:12px">3. 맵기 선택</div><div class="options"><button class="optBtn" id="notSpicyBtn" onclick="setOption('안맵게')">😊 안맵게</button><button class="optBtn" id="normalBtn" onclick="setOption('보통')">🙂 보통</button><button class="optBtn" id="spicyBtn" onclick="setOption('맵게')">🌶️ 맵게</button></div><button class="orderBtn" id="confirmBtn" onclick="confirmOrder()">주문 완료</button></div>
 <div class="card"><div class="title"><h2>전체 메뉴</h2><span class="muted">28개</span></div><div id="allMenu"></div></div>
@@ -42,7 +42,7 @@
 <script>
 const WEB_APP_URL="https://script.google.com/macros/s/AKfycbyRbMFyAOSFOtNh44SsSHgteTAKuDmjn8CSa_7QOoMabOLuJ_ZxX8ZjAg3eGmNQJSUR/exec";
 const ADMIN_PASSWORD="2026PE", ORDER_CLOSE_HOUR=11, ORDER_CLOSE_MINUTE=45, TEST_MODE=new URLSearchParams(location.search).get("test")==="1";
-const staff=["권오순","권정한","김남열","김예은","김영석","김인숙","김종학","김태윤","김현재","마하(동생무리)","박선기","배재환","배흐루지","백영준","신학섭","안희원","장인수","전유식","정유균","최영수","최종섭","한상운","황규대"];
+const staff=["권오순","권정한","김남열","김예은","김영석","김인숙","김종학","김태윤","김현재","마하(동생무리)","박선기","박기정","배재환","배흐루지","백영준","신학섭","안희원","장인수","전유식","정유균","최영수","최종섭","한상운","황규대"];
 const menu={"김밥류":[["깻잎김밥",3000],["땡초김밥",4000],["치즈김밥",4000],["참치김밥",4500],["돈까스김밥",4500]],"분식류":[["냄비라면",5000],["치즈라면",6000],["만두라면",6000],["떡라면",6000],["우동",6000],["떡만두국",9000]],"식사류":[["제육덮밥",10000],["뚝배기비빔밥",9000],["비빔밥",9000],["올갱이국",9000],["순두부",8000],["된장",8000],["청국장",8000],["콩비지장",9000],["사골황태국",9000],["김치찌개",9000],["부대찌개",9000],["뚝배기불고기",10000],["갈비탕",10000],["육개장",10000],["돈까스",9000],["치즈돈까스",10000]],"여름메뉴":[["열무국수",9000]]};
 const popular=[["제육덮밥",10000,"assets/jejeyuk.jpg"],["김치찌개",9000,"assets/kimchi.jpg"],["순두부",8000,"assets/soondubu.jpg"],["된장",8000,"assets/doenjang.jpg"],["돈까스",9000,"assets/donkatsu.jpg"],["냄비라면",5000,"assets/ramen.jpg"]];
 const imgByMenu={"제육덮밥":"assets/jejeyuk.jpg","김치찌개":"assets/kimchi.jpg","순두부":"assets/soondubu.jpg","된장":"assets/doenjang.jpg","돈까스":"assets/donkatsu.jpg","냄비라면":"assets/ramen.jpg"};
