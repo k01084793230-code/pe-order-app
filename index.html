@@ -42,7 +42,7 @@
 <script>
 const WEB_APP_URL="https://script.google.com/macros/s/AKfycbyRbMFyAOSFOtNh44SsSHgteTAKuDmjn8CSa_7QOoMabOLuJ_ZxX8ZjAg3eGmNQJSUR/exec";
 const ADMIN_PASSWORD="2026PE", ORDER_CLOSE_HOUR=11, ORDER_CLOSE_MINUTE=45, TEST_MODE=new URLSearchParams(location.search).get("test")==="1";
-const staff=["권오순","권정한","김남열","김예은","김영석","김인숙","김종학","김태윤","김현재","마하(무리)","박기정","박선기","배재환","벡키","백영준","신학섭","안희원","장인수","전유식","정유균","최영수","최종섭","한상운","황규대"];
+const staff=["권오순","권정한","김남열","김예은","김영석","김인숙","김종학","김태윤","김현재","마하","박선기","배재환","벡키","백영준","신학섭","안희원","장인수","전유식","정유균","최영근","최영수","최종섭","한상운","황규대"];
 const menu={"김밥류":[["깻잎김밥",3000],["땡초김밥",4000],["치즈김밥",4000],["참치김밥",4500],["돈까스김밥",4500]],"분식류":[["냄비라면",5000],["치즈라면",6000],["만두라면",6000],["떡라면",6000],["우동",6000],["떡만두국",9000]],"식사류":[["제육덮밥",10000],["뚝배기비빔밥",9000],["비빔밥",9000],["올갱이국",9000],["순두부",8000],["된장",8000],["청국장",8000],["콩비지장",9000],["사골황태국",9000],["김치찌개",9000],["부대찌개",9000],["뚝배기불고기",10000],["갈비탕",10000],["육개장",10000],["돈까스",9000],["치즈돈까스",10000]],"여름메뉴":[["열무국수",9000]]};
 const popular=[["제육덮밥",10000,"assets/jejeyuk.jpg"],["김치찌개",9000,"assets/kimchi.jpg"],["순두부",8000,"assets/soondubu.jpg"],["된장",8000,"assets/doenjang.jpg"],["돈까스",9000,"assets/donkatsu.jpg"],["냄비라면",5000,"assets/ramen.jpg"]];
 const imgByMenu={"제육덮밥":"assets/jejeyuk.jpg","김치찌개":"assets/kimchi.jpg","순두부":"assets/soondubu.jpg","된장":"assets/doenjang.jpg","돈까스":"assets/donkatsu.jpg","냄비라면":"assets/ramen.jpg"};
